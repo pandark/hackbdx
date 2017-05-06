@@ -1,0 +1,9 @@
+{
+  "name"         : "cashify",
+  "version"      : "0.0.1",
+  "description"  : "best project ever",
+  "main"         : "server.js",
+  "author"       : "xxx",
+  "dependencies" : {
+  }
+}
