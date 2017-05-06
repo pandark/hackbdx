@@ -1,0 +1,16 @@
+<!doctype html>
+<html>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+  <script src="./js/index.js"></script>
+
+    <div ng-app="">
+      <button onclick="geoFindMe()">Click to displace your location</button>
+      <div id="out"></div>
+      <p></p>
+      <p>Max cash I want to spend: <input type="number" ng-model="max_cash"></p>
+      <p ng-bind="max_cash"></p>
+    </div>
+
+  </body>
+</html>
