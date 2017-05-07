@@ -4,6 +4,7 @@
         <meta charset="utf-8">
         <title>Limited funds, unlimited activities!</title>
         <link href="main.css" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet"> 
     </header>
     <body>
         <p id="step1"><button onclick="geoFindMe()" id="geofindme">Locate me.</button></p>
@@ -13,9 +14,6 @@
         </div>
         <div id="solution">
             <div id="canvas"></div>
-            <div id="list">
-              LOL
-            </div>
         </div>
         <script src="https://cdn.jsdelivr.net/algoliasearch/3/algoliasearchLite.min.js"></script>
         <script>
@@ -71,8 +69,22 @@ function getResults() {
         console.log(results);
         init(results);
         render();
+        print_data(results);
     });
 
+    function  print_data(data) {
+        var res = ""
+        data.forEach(function(e, i) {
+            res += "<div class=\"container\">\
+            <div class=\"topbar\"> <p>" + e.name + "</p> </div>\
+            <div class=\"topdesc\">\
+            <p>Description :</p> <div class=\"desc\">" + e.description + "</div>\
+            </div>\
+            <p class=\"price\">Price : " + e.price.display + "</p> <span><a href=\"" + e.url + "\">link</a></span> \
+            </div>";
+        });
+        document.getElementById("list").innerHTML = res;
+    }
     //replace #result#list with the data
     solution.style.display = 'block';
 }
@@ -83,5 +95,8 @@ function getResults() {
     		<script src="https://rawgit.com/mrdoob/three.js/eee231960882f6f3b6113405f524956145148146/examples/js/controls/OrbitControls.js"></script>
     		<script type="text/javascript" src="./data.js"></script>
     		<script type="text/javascript" src="./new.js"></script>
+   <div id="list">
+        
+    </div>     
     </body>
 </html>
