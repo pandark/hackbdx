@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+    <header>
+        <title>Limited funds, unlimited activities!</title>
+        <style>
+body { width: 100%; }
+#step1, #step2 {
+    text-align: center;
+}
+        </style>
+    </header>
+    <body>
+        <p id="step1"><button onclick="geoFindMe()" id="geofindme">Locate me.</button></p>
+        <div id="step2">
+            <p id="ihavemoney">I have <input type="number" min="0" name="price" id="price" /> &euro;</p>
+            <p id="getresults"><button onclick="getResults()">What can I do?</button></p>
+        </div>
+        <div id="solution">
+            <div id="map"></div>
+            <div id="list">
+            </div>
+        </div>
+        <script>
+var lat;
+var lng;
+var max_price;
+var stepOne = document.getElementById('step1');
+var stepTwo = document.getElementById('step2');
+var solution = document.getElementById('solution');
+stepTwo.style.display = 'none';
+solution.style.display = 'none';
+function errorCallback(error) {
+    console.log('ERROR(' + error.code + '): ' + error.message);
+};
+function geoFindMe() {
+    var geoFindMeButton = document.getElementById('geofindme');
+
+    if (!navigator.geolocation) {
+        geoFindMeButton.innerHTML = 'Geolocation is not supported by your browser';
+        return;
+    }
+
+    function success(position) {
+        lat  = position.coords.latitude;
+        lng = position.coords.longitude;
+
+        stepOne.style.display = 'none';
+        stepTwo.style.display = 'block';
+    }
+
+    function error() {
+        geoFindMeButton.innerText = 'Unable to retrieve your location';
+        stepOne.style.display = 'block';
+        stepTwo.style.display = 'none';
+    }
+
+    geoFindMeButton.innerHTML = 'locating&hellip;';
+
+    navigator.geolocation.getCurrentPosition(success, error);
+}
+function getResults() {
+    max_price = parseInt(document.getElementById('price').value, 10);
+    if (lat === undefined || lng === undefined || isNaN(max_price) || max_price < 0) { return; }
+    //request data(lat, lng, max_price)
+    //replace #result#list with the data
+    solution.style.display = 'block';
+}
+        </script>
+    </body>
+</html>
