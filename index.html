@@ -11,15 +11,16 @@
             <p id="ihavemoney">I have <input type="number" min="0" name="price" id="price" /> &euro;</p>
             <p id="getresults"><button onclick="getResults()">What can I do?</button></p>
         </div>
-        <div id="canvas"></di>
         <div id="solution">
-            <div id="map"></div>
-            <div id="list"></div>
+            <div id="canvas"></div>
+            <div id="list">
+              LOL
+            </div>
         </div>
         <script src="https://cdn.jsdelivr.net/algoliasearch/3/algoliasearchLite.min.js"></script>
         <script>
-var lat;
-var lng;
+var latitude;
+var longitude;
 var max_price;
 var stepOne = document.getElementById('step1');
 var stepTwo = document.getElementById('step2');
@@ -38,8 +39,8 @@ function geoFindMe() {
     }
 
     function success(position) {
-        lat  = position.coords.latitude;
-        lng = position.coords.longitude;
+        latitude  = position.coords.latitude;
+        longitude = position.coords.longitude;
 
         stepOne.style.display = 'none';
         stepTwo.style.display = 'block';
@@ -58,17 +59,18 @@ function geoFindMe() {
 }
 function getResults() {
     max_price = parseInt(document.getElementById('price').value, 10);
-    if (lat === undefined || lng === undefined || isNaN(max_price) || max_price < 0) { return; }
+    if (latitude === undefined || longitude === undefined || isNaN(max_price) || max_price < 0) { return; }
     //request data(lat, lng, max_price)
 
     var client = algoliasearch('4X7CFUTU6C', 'eccbc3129b40cc4f17bba23e5d19228b');
     var index = client.initIndex('Hackathon');
 
-    //var results =
-
-    index.search({query: '', numericFilters: ['price.value <= ' + max_price * 100], aroundLatLng: '' + lat + ',' + lng}, function(err, content) {
+    index.search({query: '', numericFilters: ['price.value <= ' + max_price * 100], aroundLatLng: '' + latitude + ',' + longitude}, function(err, content) {
         console.log(err);
-        console.log(content.hits);
+        var results = content.hits;
+        console.log(results);
+        init(results);
+        render();
     });
 
     //replace #result#list with the data

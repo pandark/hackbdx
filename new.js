@@ -2,17 +2,10 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 
 var scene, camera, renderer;
 var API_Key = 'AIzaSyCqLgPTMNYrr6TMxmC11aXuOxvnogeCDcs';
-var lat = 44.8404400;
-var lng = -0.5805000;
 var container = document.getElementById( 'canvas' );
 document.body.appendChild( container );
 
-init();
-render();
-
-function init(){
-
-  console.log(lat);
+function init(events){
 
   var back = 0xffd8eb;
   scene = new THREE.Scene();
@@ -26,11 +19,11 @@ function init(){
   texture.crossOrigin = true;
   texture.load(
 	// resource URL
-	'https://maps.googleapis.com/maps/api/staticmap?center='+lat+','+lng+'&zoom=10&scale=4&size=1024x1024&key='+API_Key,
+	'https://maps.googleapis.com/maps/api/staticmap?center='+latitude+','+longitude+'&zoom=10&scale=4&size=1024x1024&key='+API_Key,
 	// Function when resource is loaded
 	function ( texture ) {
     var material = new THREE.MeshPhongMaterial({map: texture});
-    var geometry = new THREE.PlaneGeometry(92, 92);
+    var geometry = new THREE.PlaneGeometry(96, 96);
     var floor = new THREE.Mesh( geometry, material );
     floor.rotation.z = 2*Math.PI;
     floor.rotation.x = -Math.PI/2;
@@ -79,16 +72,21 @@ function init(){
   hemiLight.castShadow = true;
   hemiLight.shadowCameraVisible = true;
   hemiLight.position.set( 2000, 500, 0 );
-  scene.add( hemiLight ); */
+  scene.add( hemiLight );
+  */
 
-  scene.add(new THREE.AmbientLight(0x666666));
+  var light = new THREE.AmbientLight(0x666666);
+  scene.add(light);
 
-  var light = new THREE.DirectionalLight(0xdfebff, 0.75);
+
+  light = new THREE.DirectionalLight(0xdfebff, 0.75);
   light.position.set(300, 400, 50);
   light.position.multiplyScalar(1.3);
   light.castShadow = true;
-  light.shadowMapWidth = 512;
-  light.shadowMapHeight = 512;
+  light.shadowMapWidth = 2048;
+  light.shadowMapHeight = 2048;
+  light.shadowBias = 0.0001;
+  light.shadowDarkness = 0.2;
   scene.add( light );
 
   var darkMaterial = new THREE.MeshPhongMaterial( { color: 0xffffff } );
@@ -132,8 +130,13 @@ function init(){
   	scene.add(cube);
   }
 
-  for(var i=0; i<data.length; ++i)
-    add_cube(data[i][0], data[i][1], data[i][2]);
+  var multiplier = 156;
+
+  for(var i=0; i<events.length; ++i)
+    if(events[i].price.value==0)
+      add_cube((events[i]._geoloc.lat-latitude)*multiplier, (events[i]._geoloc.lng-longitude)*multiplier, 5);
+    else
+      add_cube((events[i]._geoloc.lat-latitude)*multiplier, (events[i]._geoloc.lng-longitude)*multiplier, 5+events[i].price.value);
 
   controls = new THREE.OrbitControls(camera, renderer.domElement);
   controls.maxPolarAngle = Math.PI/2-0.1;
