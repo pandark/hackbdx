@@ -2,16 +2,59 @@
     text-align: center;
 }
 
-* {
-	background-color: white;
-}
+* {font-family: 'Ubuntu', sans-serif;}
 
 body {
 	position: absolute;
 	width: 100%;
 	margin: 0;
+	background-color: #2574A9;
 }
 
 #canvas {
     position: absolute;
+}
+
+#list {
+	width: 90%;
+	margin: auto;
+	margin-top: 30px;
+}
+
+.container {
+	height: 300px;
+	width: 250px;
+	border: 2px solid black;
+	display: inline-block;
+	margin: 20px;
+	padding: 10px;
+	background-color: #2c3e50;
+}
+
+.topdesc {
+	opacity: 0.8;
+	font-style: italic;
+}
+
+p, .desc {
+	color: white;
+	font-size: 14px;
+}
+
+.desc {
+	height: 150px;
+	overflow-y: scroll;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+.price {
+	width: 80px;
+}
+
+a {
+	float: right;
+	display: inline-block;
+	text-decoration: none;
+	color: yellow;
 }
