@@ -59,9 +59,9 @@ def get_eb_events():
 def get_meet_price(key):
 
 	if ('fee' in key):
-		ret = str(key['fee']['amount']) + ' ' + key['fee']['currency'];
+            ret = dict(value = key['fee']['amount'], display = str(key['fee']['amount']) + ' ' + key['fee']['currency']);
 	else:
-		ret = "Free";
+		ret = dict(value = 0, display = '0 €');
 	return (ret);
 
 def get_meet_events(array):

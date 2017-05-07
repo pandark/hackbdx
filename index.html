@@ -1,6 +1,7 @@
 <!doctype html>
 <html>
     <header>
+        <meta charset="utf-8">
         <title>Limited funds, unlimited activities!</title>
         <style>
 body { width: 100%; }
@@ -20,6 +21,7 @@ body { width: 100%; }
             <div id="list">
             </div>
         </div>
+        <script src="https://cdn.jsdelivr.net/algoliasearch/3/algoliasearchLite.min.js"></script>
         <script>
 var lat;
 var lng;
@@ -62,6 +64,18 @@ function getResults() {
     max_price = parseInt(document.getElementById('price').value, 10);
     if (lat === undefined || lng === undefined || isNaN(max_price) || max_price < 0) { return; }
     //request data(lat, lng, max_price)
+
+    var client = algoliasearch('4X7CFUTU6C', 'eccbc3129b40cc4f17bba23e5d19228b');
+    var index = client.initIndex('Hackathon');
+
+    //var results = 
+
+//{query: '', filter: 'price <= ' + max_price, aroundLatLng: '' + lat + ', ' + lng}
+
+    index.search({query: ''/*, filter: 'price.value <= ' + max_price / 100*/}, function(err, content) {
+        console.log(content.hits);
+    });
+
     //replace #result#list with the data
     solution.style.display = 'block';
 }
