@@ -16,7 +16,7 @@
             <div id="map"></div>
             <div id="list"></div>
         </div>
-        <script src="https://cdn.jsdelivr.net/algoliasearch/3/algoliasearchLite.min.js"></script>
+        <script src="//cdn.jsdelivr.net/algoliasearch/3/algoliasearchLite.min.js"></script>
         <script>
 var lat;
 var lng;
@@ -66,9 +66,8 @@ function getResults() {
 
     //var results =
 
-//{query: '', filter: 'price <= ' + max_price, aroundLatLng: '' + lat + ', ' + lng}
-
-    index.search({query: '', filter: 'price.value <= ' + max_price * 100}, function(err, content) {
+    index.search({query: '', numericFilters: ['price.value <= ' + max_price * 100], aroundLatLng: '' + lat + ',' + lng}, function(err, content) {
+        console.log(err);
         console.log(content.hits);
     });
 
@@ -76,10 +75,10 @@ function getResults() {
     solution.style.display = 'block';
 }
         </script>
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     		<script type="text/javascript" src="js/detector.js"></script>
-    		<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r71/three.js"></script>
-    		<script src="https://rawgit.com/mrdoob/three.js/eee231960882f6f3b6113405f524956145148146/examples/js/controls/OrbitControls.js"></script>
+    		<script src="//cdnjs.cloudflare.com/ajax/libs/three.js/r71/three.js"></script>
+    		<script src="//rawgit.com/mrdoob/three.js/eee231960882f6f3b6113405f524956145148146/examples/js/controls/OrbitControls.js"></script>
     		<script type="text/javascript" src="./data.js"></script>
     		<script type="text/javascript" src="./new.js"></script>
     </body>
