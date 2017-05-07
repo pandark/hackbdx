@@ -1,15 +1,22 @@
+if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
+
 var scene, camera, renderer;
+var API_Key = 'AIzaSyCqLgPTMNYrr6TMxmC11aXuOxvnogeCDcs';
+var lat = 44.8404400;
+var lng = -0.5805000;
+var container = document.getElementById( 'canvas' );
+document.body.appendChild( container );
 
 init();
 render();
 
 function init(){
 
-  var back = 0xffd8eb; // 0xffd8eb
+  var back = 0xffd8eb;
   scene = new THREE.Scene();
   scene.background = new THREE.Color( back );
-  // scene.fog = new THREE.FogExp2( back, 0.04 );
-  camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 1, 1000);
+  //scene.fog = new THREE.FogExp2( back, 0.04 );
+  camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 1, 100);
   // camera.position.set(-11,3,25); // Game cam ?
   camera.position.set(0,10,25);
 
@@ -17,11 +24,11 @@ function init(){
   texture.crossOrigin = true;
   texture.load(
 	// resource URL
-	'https://maps.googleapis.com/maps/api/staticmap?center=44.8404400,-0.5805000&zoom=10&scale=4&size=1024x1024&key=AIzaSyCqLgPTMNYrr6TMxmC11aXuOxvnogeCDcs',
+	'https://maps.googleapis.com/maps/api/staticmap?center='+lat+','+lng+'&zoom=10&scale=4&size=1024x1024&key='+API_Key,
 	// Function when resource is loaded
 	function ( texture ) {
     var material = new THREE.MeshPhongMaterial({map: texture});
-    var geometry = new THREE.PlaneGeometry(100, 100);
+    var geometry = new THREE.PlaneGeometry(92, 92);
     var floor = new THREE.Mesh( geometry, material );
     floor.rotation.z = 2*Math.PI;
     floor.rotation.x = -Math.PI/2;
@@ -39,8 +46,8 @@ function init(){
 		console.log( 'An error happened' );
 	} );
 
-  material = new THREE.MeshPhongMaterial({color: "rgb(0,0,0)"});
-  geometry = new THREE.PlaneGeometry(10000, 10000);
+  material = new THREE.MeshPhongMaterial({color: "rgb(255,255,255)"});
+  geometry = new THREE.PlaneGeometry(1000, 1000);
   var floor2 = new THREE.Mesh( geometry, material );
   floor2.rotation.z = 2*Math.PI;
   floor2.rotation.x = -Math.PI/2;
@@ -54,22 +61,23 @@ function init(){
   renderer = new THREE.WebGLRenderer();
   renderer.setPixelRatio( window.devicePixelRatio );
   renderer.setSize(window.innerWidth, window.innerHeight);
+  container.appendChild( renderer.domElement );
   renderer.shadowMapEnabled = true;
   renderer.shadowMapSoft = true;
   renderer.shadowMapType = THREE.PCFSoftShadowMap;
   renderer.setClearColor (0xffffff, 1);
 
   document.body.appendChild(renderer.domElement);
-
+  /*
   scene.fog = new THREE.Fog( 0x242234, 0, 48 );
   scene.fog.color.setHSL( 1, 0, 1 );
-
-/*
-  var hemiLight = new THREE.HemisphereLight( 0xf7f7f7, 0xfffded, 0.75);
+  */
+  /*
+  var hemiLight = new THREE.HemisphereLight( 0xf7f7f7, 0xfffded, 0.1);
   hemiLight.castShadow = true;
   hemiLight.shadowCameraVisible = true;
   hemiLight.position.set( 2000, 500, 0 );
-  scene.add( hemiLight );*/
+  scene.add( hemiLight ); */
 
   scene.add(new THREE.AmbientLight(0x666666));
 
@@ -77,16 +85,23 @@ function init(){
   light.position.set(300, 400, 50);
   light.position.multiplyScalar(1.3);
   light.castShadow = true;
-  light.shadowCameraVisible = true;
   light.shadowMapWidth = 512;
   light.shadowMapHeight = 512;
-  var d = 25;
-  light.shadowCameraLeft = -d;
-  light.shadowCameraRight = d;
-  light.shadowCameraTop = d;
-  light.shadowCameraBottom = -d;
   scene.add( light );
 
+  var darkMaterial = new THREE.MeshPhongMaterial( { color: 0xffffff } );
+	var wireframeMaterial = new THREE.MeshPhongMaterial( { color: "rgb(10,10,10)", wireframe: true, transparent: true } );
+	var multiMaterial = [ darkMaterial, wireframeMaterial ];
+  var shape = THREE.SceneUtils.createMultiMaterialObject(
+		new THREE.TorusGeometry( 1.2, 0.4, 8, 4 ),
+		multiMaterial );
+	shape.position.set(0, 1.2, 0);
+  shape.castShadow = true;
+  shape.receiveShadow = true;
+	scene.add( shape );
+  shape.add( camera );
+
+/*
   var geometry = new THREE.BoxGeometry(0.5, 25, 0.5);
   var material = new THREE.MeshBasicMaterial( {color: "rgb(255,255,0)"} );
   var cubie = new THREE.Mesh( geometry, material );
@@ -100,11 +115,12 @@ function init(){
 
   var cubieAxis = new THREE.AxisHelper(20);
   cubie.add(cubieAxis);
+  */
 
   function add_cube(x, y, p){
     var ratio = 3;
   	var geometry = new THREE.BoxGeometry( 0.5, p, 0.5 );
-  	var material = new THREE.MeshPhongMaterial( {color: "rgb(0,100,0)"} );
+  	var material = new THREE.MeshPhongMaterial( {color: "rgb(0,50,0)"});
   	var cube = new THREE.Mesh( geometry, material );
   	cube.position.x = x;
   	cube.position.z = y;

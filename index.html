@@ -3,12 +3,7 @@
     <header>
         <meta charset="utf-8">
         <title>Limited funds, unlimited activities!</title>
-        <style>
-body { width: 100%; }
-#step1, #step2 {
-    text-align: center;
-}
-        </style>
+        <link href="main.css" rel="stylesheet" type="text/css">
     </header>
     <body>
         <p id="step1"><button onclick="geoFindMe()" id="geofindme">Locate me.</button></p>
@@ -16,10 +11,10 @@ body { width: 100%; }
             <p id="ihavemoney">I have <input type="number" min="0" name="price" id="price" /> &euro;</p>
             <p id="getresults"><button onclick="getResults()">What can I do?</button></p>
         </div>
+        <div id="canvas"></di>
         <div id="solution">
             <div id="map"></div>
-            <div id="list">
-            </div>
+            <div id="list"></div>
         </div>
         <script src="https://cdn.jsdelivr.net/algoliasearch/3/algoliasearchLite.min.js"></script>
         <script>
@@ -68,11 +63,11 @@ function getResults() {
     var client = algoliasearch('4X7CFUTU6C', 'eccbc3129b40cc4f17bba23e5d19228b');
     var index = client.initIndex('Hackathon');
 
-    //var results = 
+    //var results =
 
 //{query: '', filter: 'price <= ' + max_price, aroundLatLng: '' + lat + ', ' + lng}
 
-    index.search({query: ''/*, filter: 'price.value <= ' + max_price / 100*/}, function(err, content) {
+    index.search({query: '', filter: 'price.value <= ' + max_price * 100}, function(err, content) {
         console.log(content.hits);
     });
 
@@ -80,5 +75,11 @@ function getResults() {
     solution.style.display = 'block';
 }
         </script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    		<script type="text/javascript" src="js/detector.js"></script>
+    		<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r71/three.js"></script>
+    		<script src="https://rawgit.com/mrdoob/three.js/eee231960882f6f3b6113405f524956145148146/examples/js/controls/OrbitControls.js"></script>
+    		<script type="text/javascript" src="./data.js"></script>
+    		<script type="text/javascript" src="./new.js"></script>
     </body>
 </html>
