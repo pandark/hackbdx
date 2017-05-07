@@ -12,6 +12,8 @@ render();
 
 function init(){
 
+  console.log(lat);
+
   var back = 0xffd8eb;
   scene = new THREE.Scene();
   scene.background = new THREE.Color( back );

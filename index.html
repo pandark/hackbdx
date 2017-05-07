@@ -45,7 +45,8 @@ function geoFindMe() {
         stepTwo.style.display = 'block';
     }
 
-    function error() {
+    function error(err) {
+        console.log(err);
         geoFindMeButton.innerText = 'Unable to retrieve your location';
         stepOne.style.display = 'block';
         stepTwo.style.display = 'none';
