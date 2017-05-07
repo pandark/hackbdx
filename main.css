@@ -5,14 +5,14 @@
 * {font-family: 'Ubuntu', sans-serif;}
 
 body {
-	position: absolute;
+    /*position: absolute;*/
 	width: 100%;
 	margin: 0;
 	background-color: #2574A9;
 }
 
 #canvas {
-    position: absolute;
+    /*position: absolute;*/
 }
 
 #list {

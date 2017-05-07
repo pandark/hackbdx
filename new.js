@@ -3,7 +3,7 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 var scene, camera, renderer;
 var API_Key = 'AIzaSyCqLgPTMNYrr6TMxmC11aXuOxvnogeCDcs';
 var container = document.getElementById( 'canvas' );
-document.body.appendChild( container );
+//document.body.appendChild( container );
 
 function init(events){
 
@@ -103,7 +103,7 @@ console.log(p);
   renderer.shadowMapType = THREE.PCFSoftShadowMap;
   renderer.setClearColor (0xffffff, 1);
 
-  document.body.appendChild(renderer.domElement);
+  //document.body.appendChild(renderer.domElement);
 
   scene.fog = new THREE.Fog( 0x242234, 0, 128 );
   scene.fog.color.setHSL( 1, 0, 1 );
